@@ -4,8 +4,8 @@ from telegram.ext import Updater, RegexHandler, ConversationHandler
 import logging
 import random
 
-
-HEARTS = ['❤', '💛', '💚', '💙', '💜', '🖤']
+with open('hearts.txt', 'r', encoding='utf-8') as hearts_file:
+    hearts = hearts_file.read()
 REGULAR_STATE = 0
 
 # Enable logging
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def send_heart(bot, update):
-    bot.send_message(chat_id=update.effective_chat.id, text=random.choice(HEARTS))
+    bot.send_message(chat_id=update.effective_chat.id, text=random.choice(hearts))
     return REGULAR_STATE
 
 
@@ -27,7 +27,7 @@ def main():
     with open('token.txt', 'r') as token_file:
         updater = Updater(token_file.read().strip())
 
-    hearts_regex_handler = RegexHandler('^.*(' + '|'.join(HEARTS) + ').*$', send_heart)#, pass_user_data=True)
+    hearts_regex_handler = RegexHandler('^.*(' + '|'.join(hearts) + ').*$', send_heart)#, pass_user_data=True)
     
     conversation_handler = ConversationHandler(
         entry_points=[ hearts_regex_handler ],
