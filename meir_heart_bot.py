@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from telegram.ext import Updater, RegexHandler, ConversationHandler
 import logging
 import random
